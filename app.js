@@ -1,5 +1,5 @@
 var mongojs = require("mongojs");
-var db = mongojs('localhost:27017/ShittyGame',['account','progress']);
+//var db = mongojs('localhost:27017/ShittyGame',['account','progress']);
 
 
 var express = require('express');
@@ -10,7 +10,7 @@ app.get('/',function(req,res){
     res.sendFile(__dirname + '/client/index.html');
 });
 app.use('/client',express.static(__dirname + '/client'));
-serv.listen(2000);
+serv.listen(process.env.PORT||2000);
 console.log("started")
 var idx= 0;
 var bulletidx = 0;
@@ -120,8 +120,9 @@ Player.onConnect = function(socket){
     });
     
         socket.emit('init',{
+            selfId:socket.id,
             player:Player.getAllInitPack(),
-            bullet:[],
+            bullet:Bullet.getAllInitPack(),
         })
 }
 Player.getAllInitPack = function(){
@@ -241,9 +242,10 @@ var io = require('socket.io')(serv,{});
 io.sockets.on('connection',function(socket){
     socket.id = idx++;
     SOCKET_LIST[socket.id] = socket;
+    if(!DEBUG){
     socket.on('signIn',function(data){
         isValidPassword(data,function(res){
-            if(res){
+            if(res ){
                 Player.onConnect(socket);
                 socket.emit('signInResponse',{success:true});
             }else{
@@ -263,7 +265,11 @@ io.sockets.on('connection',function(socket){
             }
         });
     });
-    Player.onConnect(socket);
+    }else{
+        Player.onConnect(socket);
+        socket.emit('signInResponse',{success:true});
+    }
+    
     socket.on('disconnect',function(){
         delete SOCKET_LIST[socket.id];
         Player.onDisconnect(socket);
