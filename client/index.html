@@ -19,7 +19,7 @@
   </div>
   </div>
 </div>
-<div class="bg" id="menuDiv" style="display:none;">
+<div class="bg" id="menuDiv">
     <div id="gameover">
     <h2>Game Over</h2>
     <p>press <span style="background-color: #FFFFFF; color: #000000">space</span> to begin a</p>
@@ -38,12 +38,19 @@
 <div class="bg-game" id="gameDiv" style="display:none;">
         <canvas id="ctx" width="799" height="800"style="position:absolute;left:0px;top:0px;border:1px solid #000000;"></canvas>
         <div id="ui" style="position:absolute;width:1000px;height:800px;">
-        <button onclick="changeMap()" style="position:absolute;bottom:0px;left:0px">
+        <button onclick="toMenu()" style="position:absolute;bottom:0px;left:0px">
             Quit to Menu
+        </button>
+        <button onclick="changeMap()" style="position:absolute;bottom:0px;left:80px">
+                change map
+            </button>
+        <button onclick="becomeSuhaib()" style="position:absolute;bottom:0px;left:180px">
+            Suhaib Mode (what could it possibly be?)
         </button>
         <div class="chatbox" style="margin-top:0px;margin-left:800px;">
                 <div id="chat-text" style="width:200px;height:572px;overflow-y:scroll">
-                  <div>Hi!</div>
+                        <div> This is chat, you can talk here, special thanks to Haibo and Yawen and 244 and my dog.</div>
+                        <div>----------------------------</div>
                 </div>
                 <form id="chat-form">
                   <input id="chat-input" type="text"style="width:200px"></input>
@@ -57,7 +64,7 @@
     var WIDTH = 800;
     var HEIGHT = 800;
      Multiplayer = false;
-     
+     var suhaibmode = false;
      var socket = io();
 //signin
 var initiate_items = function(mode){
@@ -120,7 +127,7 @@ var ctxUi = document.getElementById("ctx").getContext("2d");
                   
               case 1:  signDiv.style.display = 'none';
                         menuDiv.style.display = 'none';
-                        menubg.style.backgroundImage = "url('/client/img/player.png')";
+                        menubg.style.backgroundImage = "url('/client/img/Brendan McCane.jpg')";
                         gamediv.style.display = 'inline-block';
                         Multiplayer= true;
                         map_items = initiate_items("multiplayer");
@@ -128,6 +135,7 @@ var ctxUi = document.getElementById("ctx").getContext("2d");
                   
               case 2:  signDiv.style.display = 'none';
                          menuDiv.style.display = 'inline-block';
+                         
                          gamediv.style.display = 'none';
                        break;
                   
@@ -191,15 +199,27 @@ chatForm.onsubmit = function(e){
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-
-var changeMap = function(){
+var toMenu = function(){
     showScreen(2);
-  //socket.emit('changeMap');
+  }
+var changeMap = function(){
+    //showScreen(2);
+  socket.emit('changeMap');
+}
+var becomeSuhaib = function(){
+    if(suhaibmode!=true){
+        suhaibmode = true;
+        Img.player.src = '/client/img/suhaib.png';
+    }
+    else{
+        suhaibmode = false;
+        Img.player.src = '/client/img/player.png';
+    }
 }
 //game
 var Img = {};
 Img.player = new Image();
-Img.player.src = '/client/img/suhaib.png';
+Img.player.src = '/client/img/player.png';
 Img.bullet = new Image();
 Img.bullet.src = '/client/img/bullet.png';
 Img.map = {};
@@ -278,8 +298,6 @@ var Player = function(initPack){
                 break;        
             }
             }
-        console.log(newx);
-        console.log(newy);
         if(newx-width/4<0 ||newx>Img.map[self.map].width-width/4)
             newx = Player.list[selfId].x;
         if(newy-width/4<0 ||newy>Img.map[self.map].height-height/4)
@@ -292,16 +310,15 @@ var Player = function(initPack){
         }
         var x = self.x -Player.list[selfId].x + WIDTH/2;
         var y = self.y - Player.list[selfId].y +HEIGHT/2;
-
+        ctx.fillStyle = 'red';
         var hpWidth = 30 * self.hp/self.hpMax;
         
         var spdX = Math.cos(self.mouseAngle/180*Math.PI) * 40;
         var spdY = Math.sin(self.mouseAngle/180*Math.PI) * 40;
 
         //player rectangle is     aw    
-        ctx.drawImage(Img.player,0,0,Img.player.width,Img.player.height,x-width/2,y-height/2,width,height);
+            ctx.drawImage(Img.player,0,0,Img.player.width,Img.player.height,x-width/2,y-height/2,width,height);
         drawArrowhead(ctx,{x:x-width/2,y:y-height/2},{x:x+spdX,y:y+spdY},5);
-        ctx.fillStyle = 'red';
         ctx.fillRect(x-hpWidth/2,y-40,hpWidth,4);
 //          ctx.fillText("hi",self.x,self.y);
 //          ctx.fillText(self.score,self.x,self.y-60);
@@ -352,9 +369,13 @@ var Bullet = function(initPack){
        
         var x = self.x -Player.list[selfId].x + WIDTH/2;
         var y = self.y - Player.list[selfId].y +HEIGHT/2;
-        ctx.drawImage(Img.bullet,0,0,Img.bullet.width,Img.bullet.height,x-width/2,y-height/2,width,height);
-        //var cha = (Math.floor(Math.random()*255)+1536).toString(16).toUpperCase();
-        //ctx.fillText(eval("'\\u0"+ cha+"'"),self.x,self.y);
+        if(suhaibmode){
+        var cha = (Math.floor(Math.random()*255)+1536).toString(16).toUpperCase();
+        ctx.fillText(eval("'\\u0"+ cha+"'"),x-width/2,y-height/2);
+        }
+        else{
+            ctx.drawImage(Img.bullet,0,0,Img.bullet.width,Img.bullet.height,x-width/2,y-height/2,width,height);
+        }
 //         ctx.fillRect(self.x-5,self.y-5,10,10);
     }
     return self;

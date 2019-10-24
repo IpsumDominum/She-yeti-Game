@@ -66,7 +66,6 @@ io.sockets.on('connection', function(socket){
 			}
 		});		
     });
-
     }else{
         Player.onConnect(socket,socket.id);
         socket.emit('signInResponse',{success:true});        
