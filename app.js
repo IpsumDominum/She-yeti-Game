@@ -16,7 +16,7 @@ console.log("started")
 
 
 
-var DEBUG =true;
+var DEBUG =false;
 
 
 var isValidPassword = function(data,cb){
