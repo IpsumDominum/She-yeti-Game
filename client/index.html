@@ -349,7 +349,6 @@ var Bullet = function(initPack){
             var newy = self.y + self.spdY;
             if(newx+width/4>left && newx-width/4<left+w
             && newy-height>top && newy+height<top+h){
-                console.log('collision');                    
                 confirmPack['bullets'][self.id] = {
                     x:self.x,
                     y:self.y,
@@ -358,10 +357,9 @@ var Bullet = function(initPack){
                 return;
                 } 
              }
-         
-        }
-        self.x = newx;
+             self.x = newx;
             self.y = newy;
+        }
         confirmPack['bullets'][self.id] = {
                     x:self.x,
                     y:self.y,
@@ -369,9 +367,9 @@ var Bullet = function(initPack){
        
         var x = self.x -Player.list[selfId].x + WIDTH/2;
         var y = self.y - Player.list[selfId].y +HEIGHT/2;
-        if(suhaibmode){
-        var cha = (Math.floor(Math.random()*255)+1536).toString(16).toUpperCase();
-        ctx.fillText(eval("'\\u0"+ cha+"'"),x-width/2,y-height/2);
+        if(suhaibmode && self.parent===selfId){
+            var cha = (Math.floor(Math.random()*255)+1536).toString(16).toUpperCase();
+            ctx.fillText(eval("'\\u0"+ cha+"'"),x-width/2,y-height/2);
         }
         else{
             ctx.drawImage(Img.bullet,0,0,Img.bullet.width,Img.bullet.height,x-width/2,y-height/2,width,height);
