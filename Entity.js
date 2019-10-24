@@ -21,7 +21,14 @@ Entity = function(param){
 			self.map = param.map;
 		if(param.id)
 			self.id = param.id;		
-	}    
+    }    
+    self.update = function(){
+        self.updatePosition();
+    }
+    self.updatePosition = function(){
+        self.x += self.spdX;        
+        self.y += self.spdY;        
+    }
     self.getDistance = function(pt){
         return Math.sqrt(Math.pow(self.x-pt.x,2)+Math.pow(self.y-pt.y,2));
     }
@@ -62,8 +69,10 @@ Entity.getFrameUpdateData = function(){
     self.username = param.username;
     self.score = 0;
     self.maxSpd = 10;
+    var super_update = self.update;
     self.update = function(){
         self.updateSpd();
+        super_update();
         if(self.pressingAttack){
             self.shootBullet(self.mouseAngle);
         }
@@ -150,6 +159,7 @@ Player.onConnect = function(socket,username){
             player:Player.getAllInitPack(),
             bullet:Bullet.getAllInitPack(),
         })
+        /*
         socket.on('confirm',function(data){
             Player.list[data['id']].x = data['x'];
             Player.list[data['id']].y = data['y'];
@@ -161,7 +171,7 @@ Player.onConnect = function(socket,username){
                 Bullet.list[b].toRemove = data['bullets'][b]['toRemove'];
                 }
             }
-        });
+        });*/
         socket.on('changeMap',function(data){
             if(player.map ==="field")
             player.map = "forest";
@@ -203,9 +213,11 @@ Bullet = function(param){
     self.timer = 0;
     self.parent = param.parent;
     self.toRemove = false;
+    var super_update = self.update;
     self.update = function(){
         if(self.timer++ > 100)
             self.toRemove = true;
+        super_update();
         for(var i in Player.list){
             var p = Player.list[i];
             if(self.map===p.map && self.getDistance(p)<32 && self.parent!==p.id){

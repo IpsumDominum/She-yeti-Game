@@ -261,8 +261,8 @@ function drawArrowhead(context, from, to, radius) {
 
 	context.fill();
 }
-confirmPack = {};
-confirmPack['bullets'] = {};
+//confirmPack = {};
+//confirmPack['bullets'] = {};
 var Player = function(initPack){
     var self = {};
     self.id = initPack.id;
@@ -281,9 +281,9 @@ var Player = function(initPack){
               return;
         var width = Img.player.width*2;
         var height = Img.player.height*2;
-
+        /*
         if(self.id===selfId){
-
+                        
         for(var img in map_items){
             var top = parseInt(map_items[img].top);
             var w = parseInt(map_items[img].width);
@@ -308,6 +308,7 @@ var Player = function(initPack){
         self.x = newx;
         self.y = newy;
         }
+        */
         var x = self.x -Player.list[selfId].x + WIDTH/2;
         var y = self.y - Player.list[selfId].y +HEIGHT/2;
         ctx.fillStyle = 'red';
@@ -339,6 +340,7 @@ var Bullet = function(initPack){
           return;
         var width = Img.bullet.width/2;
         var height = Img.bullet.height/2;
+        /*
         if(self.parent ===selfId){
             for(var img in map_items){
             var top = parseInt(map_items[img].top);
@@ -364,7 +366,7 @@ var Bullet = function(initPack){
                     x:self.x,
                     y:self.y,
         };
-       
+        */
         var x = self.x -Player.list[selfId].x + WIDTH/2;
         var y = self.y - Player.list[selfId].y +HEIGHT/2;
         if(suhaibmode && self.parent===selfId){
@@ -410,11 +412,12 @@ socket.on('update',function(data){
                 p.map= pack.map;
             if(pack.mouseAngle!=undefined)
                 p.mouseAngle = pack.mouseAngle;
-            if(pack.spdX!=undefined){
+            /*if(pack.spdX!=undefined){
                 p.spdX = pack.spdX;
             }
             if(pack.spdY!=undefined)
                 p.spdY = pack.spdY;
+                */
         }
     }
     for(var i =0; i<data.bullet.length;i++){
@@ -425,10 +428,12 @@ socket.on('update',function(data){
                  b.x = pack.x;
             if(pack.y!==undefined)
                 b.y= pack.y;
+                /*
             if(pack.spdX!=undefined)
                 b.spdX = pack.spdX;
             if(pack.spdY!=undefined)
                 b.spdY = pack.spdY;
+                */
         }
     }
 });
@@ -467,9 +472,9 @@ setInterval(function(){
         Bullet.list[i].draw();
     }
     
-    socket.emit('confirm',confirmPack);
-    confirmPack = {};
-    confirmPack['bullets'] = {};
+    //socket.emit('confirm',confirmPack);
+    //confirmPack = {};
+    //confirmPack['bullets'] = {};
 },40);
 var drawMap = function(){
     var player = Player.list[selfId]
