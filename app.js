@@ -21,7 +21,7 @@ var DEBUG =true;
 
 var isValidPassword = function(data,cb){
     db.account.find({username:data.username,password:data.password},function(err,res){
-        if(res.length>0)
+        if(res!=undefined &&res.length>0)
             cb(true);
         else
             cb(false);
@@ -45,9 +45,10 @@ io.sockets.on('connection', function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
 	if(!DEBUG){
-	socket.on('signIn',function(data){
+	socket.on('signIn',function(data){		
 		isValidPassword(data,function(res){
 			if(res){
+				
 				Player.onConnect(socket,data.username);
 				socket.emit('signInResponse',{success:true});
 			} else {
@@ -56,6 +57,7 @@ io.sockets.on('connection', function(socket){
 		});
 	});
 	socket.on('signUp',function(data){
+		
 		isUsernameTaken(data,function(res){
 			if(res){
 				socket.emit('signUpResponse',{success:false});		

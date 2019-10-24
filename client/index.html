@@ -7,10 +7,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
-<div class="bg"id="signDiv"style="position:absolute">
+<div class="bg"style="position:absolute">
     
 </div>
-<div class="login-box">
+<div class="login-box "id="signDiv">
     <div class="container">
         <br>
         <br>
@@ -136,7 +136,6 @@ var ctxUi = document.getElementById("ctx").getContext("2d");
                   
               case 2:  signDiv.style.display = 'none';
                          menuDiv.style.display = 'inline-block';
-                         
                          gamediv.style.display = 'none';
                        break;
                   
@@ -160,7 +159,7 @@ signDivSignUp.onclick = function(){
 }
 socket.on('signInResponse',function(data){
     if(data.success){
-    
+        showScreen(2);
     } else
         alert("Sign in unsuccessul.");
 });
