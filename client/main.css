@@ -1,6 +1,13 @@
 body, html {
     height: 100%;
   }
+  *, *::after, *::before {
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-app-region: no-drag;
+	cursor: default;
+}
+
   .bg {
     /* The image used */
     background-image: url("/client/img/university-blood.png");
@@ -18,7 +25,17 @@ body, html {
     background-color: #FF4136;
     position: absolute;
     left: 50%;
-    top: 60%;
+    top: 40%;
+    width:1000;
+    height:800;
+    transform: translate(-50%, -50%);
+  }
+  .bg-menu {
+    /* The image used */
+    background-color: #FF4136;
+    position: absolute;
+    left: 50%;
+    top: 40%;
     transform: translate(-50%, -50%);
   }
   .login-box {
