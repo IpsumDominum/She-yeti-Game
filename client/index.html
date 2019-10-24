@@ -7,17 +7,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
-<div class="bg"id="signDiv">
-    <div class="login-box">
-        <div class="container">
-            <br>
-            <br>
-  Username:<input class="form-control"id="signDiv-username" type="text"></input><br>
-  Password:<input type="password" class="form-control"id="signDiv-password" type="password"></input>
-  <button class="btn btn-warning"id="signDiv-signIn">Sign In</button>
-  <button class="btn btn-warning" id="signDiv-signUp">Sign Up</button>
-  </div>
-  </div>
+<div class="bg"id="signDiv"style="position:absolute">
+    
+</div>
+<div class="login-box">
+    <div class="container">
+        <br>
+        <br>
+Username:<input class="form-control"id="signDiv-username" type="text"></input><br>
+Password:<input type="password" class="form-control"id="signDiv-password" type="password"></input>
+<button class="btn btn-warning"id="signDiv-signIn">Sign In</button>
+<button class="btn btn-warning" id="signDiv-signUp">Sign Up</button>
+</div>
 </div>
 <div class="bg" id="menuDiv">
     <div id="gameover">
@@ -146,6 +147,7 @@ var ctxUi = document.getElementById("ctx").getContext("2d");
                       break;
           }
       }
+showScreen(0);
 button_multiplayer_menu.onclick = function(){showScreen(1);};
 button_campaign_menu.onclick = function(){showScreen(1);};
 button_setting_menu.onclick = function(){showScreen(1);};
@@ -158,7 +160,7 @@ signDivSignUp.onclick = function(){
 }
 socket.on('signInResponse',function(data){
     if(data.success){
-        showScreen(2);
+    
     } else
         alert("Sign in unsuccessul.");
 });
