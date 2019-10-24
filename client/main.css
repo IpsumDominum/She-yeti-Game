@@ -21,6 +21,15 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
   }
+  .levelmaker{
+/* The image used */
+    /* Center and scale the image nicely */
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left:500px;
+  }
   .bg-game {
     /* The image used */
     background-color: #FF4136;

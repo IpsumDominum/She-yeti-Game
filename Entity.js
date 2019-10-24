@@ -65,6 +65,10 @@ Entity.getFrameUpdateData = function(){
     self.pressingAttack = false;
     self.mouseAngle = 0;
     self.hp = 10;
+    self.attackSpd = 10;
+    self.cooldown = 0;
+    self.bullet = "magic";
+    self.bulletspeed = 40;
     self.hpMax =10;
     self.username = param.username;
     self.score = 0;
@@ -74,8 +78,13 @@ Entity.getFrameUpdateData = function(){
         self.updateSpd();
         super_update();
         if(self.pressingAttack){
-            self.shootBullet(self.mouseAngle);
+            if(self.cooldown ===0){
+                self.shootBullet(self.mouseAngle);
+                self.cooldown = self.attackSpd;
+            }
         }
+        if(self.cooldown>0)
+            self.cooldown -=1;
         
     }
     self.shootBullet = function(angle){
@@ -84,7 +93,8 @@ Entity.getFrameUpdateData = function(){
 			angle:angle,
 			x:self.x,
 			y:self.y,
-			map:self.map,
+            map:self.map,
+            bulletspeed:self.bulletspeed,
 		});
     }
     self.updateSpd = function(){
@@ -209,10 +219,11 @@ Player.update = function(){
 Bullet = function(param){
     var self = Entity(param);
     self.id = bulletidx ++;
-    self.spdX = Math.cos(param.angle/180*Math.PI) * 10;
-    self.spdY = Math.sin(param.angle/180*Math.PI) * 10;
-    self.timer = 0;
     self.parent = param.parent;
+    self.bulletspeed = param.bulletspeed;
+    self.spdX = Math.cos(param.angle/180*Math.PI) * self.bulletspeed;
+    self.spdY = Math.sin(param.angle/180*Math.PI) * self.bulletspeed;
+    self.timer = 0;
     self.toRemove = false;
     var super_update = self.update;
     self.update = function(){
