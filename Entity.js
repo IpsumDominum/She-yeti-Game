@@ -109,7 +109,8 @@ Entity.getFrameUpdateData = function(){
             hp:self.hp,
             hpMax:self.hpMax,
             score:self.score,
-            map:self.map
+            map:self.map,
+            username:self.username
         };
     }
     self.getUpdatePack = function(){
@@ -241,7 +242,6 @@ Bullet = function(param){
             y:self.y,
             parent:self.parent,
             map:self.map,
-            username:self.username
         };
     }
     self.getUpdatePack = function(){

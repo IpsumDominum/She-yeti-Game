@@ -146,7 +146,6 @@ var ctxUi = document.getElementById("ctx").getContext("2d");
                       break;
           }
       }
-
 button_multiplayer_menu.onclick = function(){showScreen(1);};
 button_campaign_menu.onclick = function(){showScreen(1);};
 button_setting_menu.onclick = function(){showScreen(1);};
@@ -198,6 +197,8 @@ chatForm.onsubmit = function(e){
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 ///////////////////////////////////////////
+      
+      
 
 var toMenu = function(){
     showScreen(2);
@@ -316,11 +317,13 @@ var Player = function(initPack){
         
         var spdX = Math.cos(self.mouseAngle/180*Math.PI) * 40;
         var spdY = Math.sin(self.mouseAngle/180*Math.PI) * 40;
-
         //player rectangle is     aw    
-            ctx.drawImage(Img.player,0,0,Img.player.width,Img.player.height,x-width/2,y-height/2,width,height);
+        ctx.drawImage(Img.player,0,0,Img.player.width,Img.player.height,x-width/2,y-height/2,width,height);
         drawArrowhead(ctx,{x:x-width/2,y:y-height/2},{x:x+spdX,y:y+spdY},5);
         ctx.fillRect(x-hpWidth/2,y-40,hpWidth,4);
+        ctx.fillStyle = 'black';
+        var name = self.username.toString().slice(0,7);
+        ctx.fillText(name,x-width/2,y+40,width,2);
 //          ctx.fillText("hi",self.x,self.y);
 //          ctx.fillText(self.score,self.x,self.y-60);
     }
