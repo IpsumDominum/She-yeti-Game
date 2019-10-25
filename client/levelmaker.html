@@ -1,12 +1,93 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="client/css/main.css">
+<link rel="stylesheet" href="client/css/another.css">
+
+<div class="bg-game" id="gameDiv">
+        <canvas id="ctx" width="795" height="800"style="position:absolute;left:0px;top:0px;border:1px solid #000000;"></canvas>
+        <div id="target" ondrop="drop_handler(event);" ondragover="dragover_handler(event);" id="ui" style="position:absolute;width:800px;border:5px solid blue;height:800px;">
+                <div class="bg-menu" id="menu">
+            Select a main Map to start
+            <div class="row">
+            <div class="column-2">
+                <img src="client/img/map.png" id="green" width="150"height="150">
+                <p> green</p>
+            </div>
+            <div class="column-2">
+            <img src="client/img/map2.png" id="blood"width="150"height="150">
+                <p> bloodshed otago </p>
+            </div>
+            <div class="column-2">
+            <img src="client/img/map3.png" id="white"width="150"height="150">
+                <p> white </p>
+            </div>
+            </div>
+            Name of your map:<input class="form-control" id="map-name" type="text" ></input>
+            <button class="btn btn-warning"id="map-create"style="width:600px"><strong>Create map</strong></button>
+            <p id="info"style="position:absolute"></p>
+            </div>
+        <button onclick="toMenu()" style="position:absolute;bottom:0px;left:0px">
+            Quit to Menu
+        </button>
+        <button onclick="changeMap()" style="position:absolute;bottom:0px;left:120px">
+                Save edits
+            </button>
+            
+    </div>    
+        <div class="chatbox" style="margin-top:0px;margin-left:800px;">
+                <div id="enemy-box-container" style="width:200px;height:800px;overflow-y:scroll;overflow-x:hidden;display:none">
+                       <div class="item-box card " style="width:18rem;">
+                                <h2>Enemies</h2>
+                        </div>
+                        <div class="item-box card " style="width:18rem;">
+                        <div id="face3.jpg" ondragstart="dragstart_handler(event);" draggable="true" class="card-body">
+                            <img src="client/img/face3.jpg" width="40"height="40">
+                            Sheep
+                            </div>
+                        </div>
+                        <div class="item-box card " style="width:18rem;">
+                            <div id="capguy.png" ondragstart="dragstart_handler(event);" draggable="true" class="card-body">
+                                <img src="client/img/capguy.png" width="40"height="40">
+                                    Capguy
+                            </div>
+                        </div>
+                        <div class="item-box card " style="width:18rem;">
+                        <div id="bat.png" ondragstart="dragstart_handler(event);" draggable="true" class="card-body">
+                            <img src="client/img/bat.png" width="40"height="40">
+                              bat
+                            </div>
+                        </div>                         
+                </div>         
+                <div id="object-box-container" style="width:200px;height:800px;overflow-y:scroll;overflow-x:hidden;">
+                       <div class="item-box card " style="width:18rem;">
+                                <h2>Objects</h2>
+                        </div>
+                        <div class="item-box card " style="width:18rem;">
+                        <div id="Brendan McCane.jpg" ondragstart="dragstart_handler(event);" draggable="true" class="card-body">
+                            <img src="client/img/Brendan McCane.jpg" width="40"height="40">
+                                brendan
+                            </div>
+                        </div>
+                        <div class="item-box card " style="width:18rem;">
+                            <div id="woodblock.png" ondragstart="dragstart_handler(event);" draggable="true" class="card-body">
+                                <img src="client/img/woodblock.png" width="40"height="40">
+                                    woodblock
+                            </div>
+                        </div>
+                                                 
+                </div>               
+                <button onclick="switchTab(1)" class="btn-warning "style="width:100px;position:absolute;bottom:0px;left:800px">
+                                Objects
+                             </button>   
+                             <button onclick="switchTab(2)" class="btn-warning"style="width:100px;position:absolute;bottom:0px;left:900px">
+                                Enemies
+                             </button>   
+                </div>
+</div>
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="client/main.css">
-<link rel="stylesheet" href="client/another.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-
-<div class="bg" id="menuDiv">
-
-</div>
+<script src="client/js/levelmaker.js"></script>
+<script src="client/js/animate.js"></script>

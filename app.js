@@ -88,9 +88,12 @@ io.sockets.on('connection', function(socket){
 		var res = eval(data);
 		socket.emit('evalAnswer',res);		
 	});
-	
-	
-	
+	socket.on('addImage',function(data){
+		console.log('hi');
+	});
+	socket.on('map_create',function(data){
+		console.log('hi');
+	});
 });
 
 
